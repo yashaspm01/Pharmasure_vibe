@@ -1,0 +1,122 @@
+'use client';
+
+import React, { useMemo, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import type { Medication } from '@/lib/pharma/types';
+import { getStatus } from '@/lib/pharma/helpers';
+import { MedicineBoxIcon, ExclamationIcon, WarningTriangleIcon, DollarSignIcon } from './Icons';
+import MetricCard from './MetricCard';
+import AlertList from './AlertList';
+
+// Generate trend data based on current medication statuses
+const generateTrendData = (meds: Medication[]) => {
+    const today = new Date();
+    const expired = meds.filter(m => getStatus(m.expiryDate).text === 'Expired').length;
+    const expiringSoon = meds.filter(m => getStatus(m.expiryDate).text === 'Expiring soon').length;
+    
+    return {
+        'Last 7 Days': Array.from({ length: 7 }, (_, i) => ({ 
+            name: new Date(today.getTime() - (6-i) * 24*60*60*1000).toLocaleDateString('en', { weekday: 'short' }), 
+            'Expiring Soon': Math.floor(expiringSoon * (0.8 + Math.random() * 0.4) / 7), 
+            'Expired': Math.floor(expired * (0.8 + Math.random() * 0.4) / 7) 
+        })),
+        'Month': Array.from({ length: 4 }, (_, i) => ({ 
+            name: `Week ${i + 1}`, 
+            'Expiring Soon': Math.floor(expiringSoon * (0.2 + Math.random() * 0.3)), 
+            'Expired': Math.floor(expired * (0.2 + Math.random() * 0.3)) 
+        })),
+        'Quarter': Array.from({ length: 3 }, (_, i) => ({
+            name: new Date(today.getFullYear(), today.getMonth() - (2-i), 1).toLocaleDateString('en', { month: 'short' }),
+            'Expiring Soon': Math.floor(expiringSoon * (0.25 + Math.random() * 0.35)),
+            'Expired': Math.floor(expired * (0.25 + Math.random() * 0.35))
+        })),
+        'Year': Array.from({ length: 4 }, (_, i) => ({ 
+            name: `Q${i + 1}`, 
+            'Expiring Soon': Math.floor(expiringSoon * (0.2 + Math.random() * 0.3)), 
+            'Expired': Math.floor(expired * (0.2 + Math.random() * 0.3)) 
+        })),
+    };
+};
+
+const DashboardView: React.FC<{ meds: Medication[] }> = ({ meds }) => {
+    const [activeTrend, setActiveTrend] = useState('Month');
+    const allTrendData = useMemo(() => generateTrendData(meds), [meds]);
+
+    const analysisData = useMemo(() => {
+        const expired = meds.filter(m => getStatus(m.expiryDate).text === 'Expired');
+        const expiringSoon = meds.filter(m => getStatus(m.expiryDate).text === 'Expiring soon');
+        const totalValue = meds.reduce((acc, med) => {
+            // Mock price calculation for demonstration
+            const mockPrice = (med.name.length % 5) * 10 + 50; // Price between 50-90
+            return acc + (med.stock * mockPrice);
+        }, 0);
+
+        return {
+            totalMeds: meds.length,
+            expiredCount: expired.length,
+            expiringSoonCount: expiringSoon.length,
+            totalValue,
+            expiredMeds: expired.sort((a,b) => new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime()),
+            expiringSoonMeds: expiringSoon.sort((a,b) => new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime()),
+        };
+    }, [meds]);
+
+    if (meds.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center h-full p-8">
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">No Medications Yet</h3>
+                <p className="text-gray-500 text-center">Start adding medications to see analytics and insights here.</p>
+            </div>
+        );
+    }
+
+    return (
+        <>
+            <header className="h-28 border-b border-gray-200 sticky top-0 bg-white z-10 flex items-center p-4">
+                <h1 className="text-2xl font-bold text-gray-900">Reports & Analytics</h1>
+            </header>
+            <main className="flex-grow overflow-y-auto pb-20 bg-gray-50">
+                <div className="p-4 space-y-6">
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Key Metrics</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                            <MetricCard title="Total Medicines" value={analysisData.totalMeds} icon={<MedicineBoxIcon />} iconBg="bg-blue-100" iconColor="text-blue-600" />
+                            <MetricCard title="Expired" value={analysisData.expiredCount} icon={<ExclamationIcon />} iconBg="bg-red-100" iconColor="text-red-600" />
+                            <MetricCard title="Expiring Soon" value={analysisData.expiringSoonCount} icon={<WarningTriangleIcon />} iconBg="bg-orange-100" iconColor="text-orange-600" />
+                            <MetricCard title="Total Value" value={`₹${analysisData.totalValue.toLocaleString('en-IN')}`} icon={<DollarSignIcon />} iconBg="bg-green-100" iconColor="text-green-600" />
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+                        <h3 className="font-bold mb-4 text-lg text-gray-700">Expiry Trends</h3>
+                        <div className="flex space-x-2 overflow-x-auto scrollbar-hide mb-4">
+                            {['Last 7 Days', 'Month', 'Quarter', 'Year'].map(filter => (
+                                <button key={filter} onClick={() => setActiveTrend(filter)} className={`px-4 py-2 text-sm font-medium rounded-full transition-colors whitespace-nowrap ${activeTrend === filter ? 'bg-blue-600 text-white shadow' : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-100'}`}>{filter}</button>
+                            ))}
+                        </div>
+                        <div style={{ width: '100%', height: 250 }}>
+                            <ResponsiveContainer>
+                                <BarChart data={allTrendData[activeTrend as keyof typeof allTrendData]} margin={{ top: 5, right: 0, left: -20, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                                    <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#6b7280' }} axisLine={false} tickLine={false} />
+                                    <YAxis tick={{ fontSize: 12, fill: '#6b7280' }} axisLine={false} tickLine={false} />
+                                    <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.5rem' }} />
+                                    <Legend iconType="circle" wrapperStyle={{ fontSize: '14px', paddingTop: '10px' }} />
+                                    <Bar dataKey="Expiring Soon" fill="#f97316" radius={[4, 4, 0, 0]} barSize={15} />
+                                    <Bar dataKey="Expired" fill="#ef4444" radius={[4, 4, 0, 0]} barSize={15} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                        <AlertList title="Recently Expired" icon={<ExclamationIcon />} count={analysisData.expiredCount} meds={analysisData.expiredMeds} />
+                        <AlertList title="Nearing Expiry" icon={<WarningTriangleIcon />} count={analysisData.expiringSoonCount} meds={analysisData.expiringSoonMeds} />
+                    </div>
+                </div>
+            </main>
+        </>
+    );
+};
+
+export default DashboardView;

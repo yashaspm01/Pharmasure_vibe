@@ -1,0 +1,27 @@
+{
+  "node": {
+    "407bbacfcedb0043ffebd03210259efcb60f68c5a0": {
+      "workers": {
+        "app/(pages)/profile/page": {
+          "moduleId": "[project]/.next-internal/server/app/(pages)/profile/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/chatbot.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/ai/flows/health-report-generation.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(pages)/profile/page": "action-browser"
+      }
+    },
+    "40c829ffa2f9b6f6ae8de16dde11f764237b0581a3": {
+      "workers": {
+        "app/(pages)/profile/page": {
+          "moduleId": "[project]/.next-internal/server/app/(pages)/profile/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/chatbot.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/ai/flows/health-report-generation.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(pages)/profile/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}

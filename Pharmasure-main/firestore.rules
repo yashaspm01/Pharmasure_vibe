@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow read, update, delete: if isOwner(userId);
+      allow create: if isSignedIn();
+
+      // Allow users to manage their own subcollections
+      match /scans/{scanId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      match /meds/{medId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /{subcollection}/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}

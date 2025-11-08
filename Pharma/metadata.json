@@ -1,0 +1,7 @@
+{
+  "name": "Pharmacist Pharmasure",
+  "description": "An intelligent pharmacy inventory management application that helps pharmacists track medication stock, expiry dates, and view analytics. It features an AI-powered scanner to quickly add new medications.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "node": {
+    "407bbacfcedb0043ffebd03210259efcb60f68c5a0": {
+      "workers": {
+        "app/(pages)/prescription-upload/page": {
+          "moduleId": "[project]/.next-internal/server/app/(pages)/prescription-upload/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/chatbot.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/ai/flows/medicine-label-analysis.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(pages)/prescription-upload/page": "action-browser"
+      }
+    },
+    "40bd739615acaca313f74c939701fa5a47b9137b49": {
+      "workers": {
+        "app/(pages)/prescription-upload/page": {
+          "moduleId": "[project]/.next-internal/server/app/(pages)/prescription-upload/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/chatbot.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/ai/flows/medicine-label-analysis.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(pages)/prescription-upload/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}

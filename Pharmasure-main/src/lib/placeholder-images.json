@@ -1,0 +1,100 @@
+{
+  "placeholderImages": [
+    {
+      "id": "prod_aspirin_1",
+      "description": "Box of aspirin tablets",
+      "imageUrl": "https://picsum.photos/seed/101/400/400",
+      "imageHint": "medicine box"
+    },
+    {
+      "id": "prod_syrup_1",
+      "description": "Bottle of cough syrup",
+      "imageUrl": "https://picsum.photos/seed/102/400/400",
+      "imageHint": "syrup bottle"
+    },
+    {
+      "id": "prod_atorvastatin_1",
+      "description": "Box of Atorvastatin",
+      "imageUrl": "https://picsum.photos/seed/103/400/400",
+      "imageHint": "medicine pills"
+    },
+    {
+      "id": "prod_vitamins_1",
+      "description": "Bottle of multivitamin capsules",
+      "imageUrl": "https://picsum.photos/seed/104/400/400",
+      "imageHint": "vitamin bottle"
+    },
+    {
+      "id": "prod_vitamind_1",
+      "description": "Bottle of vitamin D softgels",
+      "imageUrl": "https://picsum.photos/seed/113/400/400",
+      "imageHint": "vitamin d"
+    },
+    {
+      "id": "prod_lisinopril_1",
+      "description": "Box of Lisinopril",
+      "imageUrl": "https://picsum.photos/seed/114/400/400",
+      "imageHint": "blood pressure"
+    },
+    {
+      "id": "prod_meftal_1",
+      "description": "Box of Meftal Spas",
+      "imageUrl": "https://picsum.photos/seed/115/400/400",
+      "imageHint": "painkiller tablet"
+    },
+    {
+      "id": "prod_vitaminc_1",
+      "description": "Bottle of Vitamin C tablets",
+      "imageUrl": "https://picsum.photos/seed/116/400/400",
+      "imageHint": "vitamin c"
+    },
+    {
+      "id": "prod_bandages_1",
+      "description": "Box of adhesive bandages",
+      "imageUrl": "https://picsum.photos/seed/105/400/400",
+      "imageHint": "bandage box"
+    },
+    {
+      "id": "prod_cream_1",
+      "description": "Tube of antiseptic cream",
+      "imageUrl": "https://picsum.photos/seed/106/400/400",
+      "imageHint": "cream tube"
+    },
+    {
+      "id": "prod_eyedrops_1",
+      "description": "Bottle of eye drops",
+      "imageUrl": "https://picsum.photos/seed/107/400/400",
+      "imageHint": "eye drops"
+    },
+    {
+      "id": "prod_thermometer_1",
+      "description": "Digital thermometer",
+      "imageUrl": "https://picsum.photos/seed/108/400/400",
+      "imageHint": "digital thermometer"
+    },
+    {
+      "id": "prod_mask_1",
+      "description": "Box of surgical face masks",
+      "imageUrl": "https://picsum.photos/seed/109/400/400",
+      "imageHint": "face masks"
+    },
+    {
+      "id": "prod_sanitizer_1",
+      "description": "Bottle of hand sanitizer",
+      "imageUrl": "https://picsum.photos/seed/110/400/400",
+      "imageHint": "hand sanitizer"
+    },
+    {
+      "id": "prod_allergy_1",
+      "description": "Box of allergy relief tablets",
+      "imageUrl": "https://picsum.photos/seed/111/400/400",
+      "imageHint": "allergy medicine"
+    },
+    {
+      "id": "prod_digestive_1",
+      "description": "Bottle of digestive aid tablets",
+      "imageUrl": "https://picsum.photos/seed/112/400/400",
+      "imageHint": "digestive aid"
+    }
+  ]
+}

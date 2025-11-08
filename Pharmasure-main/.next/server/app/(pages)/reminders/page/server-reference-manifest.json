@@ -1,0 +1,16 @@
+{
+  "node": {
+    "407bbacfcedb0043ffebd03210259efcb60f68c5a0": {
+      "workers": {
+        "app/(pages)/reminders/page": {
+          "moduleId": "[project]/.next-internal/server/app/(pages)/reminders/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/chatbot.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(pages)/reminders/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}

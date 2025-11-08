@@ -1,0 +1,190 @@
+
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "A user of the application",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user's unique ID"
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's unique username"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "The user's full name"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The user's first name"
+        },
+        "middleName": {
+          "type": "string",
+          "description": "The user's middle name"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The user's last name"
+        },
+        "photoURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the user's profile picture"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "The user's country phone code"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The user's phone number"
+        },
+        "age": {
+          "type": "number",
+          "description": "The user's age"
+        },
+        "gender": {
+          "type": "string",
+          "description": "The user's gender",
+          "enum": [
+            "male",
+            "female",
+            "prefer-not-to-say"
+          ]
+        },
+        "bloodGroup": {
+          "type": "string",
+          "description": "The user's blood group"
+        },
+        "healthIssues": {
+          "type": "array",
+          "description": "A list of pre-existing health issues",
+          "items": {
+            "type": "string"
+          }
+        },
+        "profileComplete": {
+          "type": "boolean",
+          "description": "Whether the user has completed their profile"
+        }
+      },
+      "required": [
+        "uid",
+        "username",
+        "fullName"
+      ]
+    },
+    "Scan": {
+      "title": "Scan",
+      "description": "Represents a record of a medication scan, containing details extracted by AI.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the medicine."
+        },
+        "strength": {
+          "type": "string",
+          "description": "The strength or dosage of the medicine."
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "The manufacturer of the medicine."
+        },
+        "mfgDate": {
+          "type": "string",
+          "description": "The manufacturing date."
+        },
+        "expiryDate": {
+          "type": "string",
+          "description": "The expiry date."
+        },
+        "batchNumber": {
+          "type": "string",
+          "description": "The batch number of the medicine."
+        },
+        "scannedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the scan was saved."
+        },
+        "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URL of the scanned image in Firebase Storage."
+        }
+      },
+      "required": [
+        "name",
+        "scannedAt"
+      ]
+    },
+    "Medication": {
+        "title": "Medication",
+        "description": "Represents a medication added by the user, often from a scan.",
+        "type": "object",
+        "properties": {
+            "name": {"type": "string"},
+            "dosage": {"type": "string"},
+            "status": {"type": "string", "enum": ["Active", "Completed", "Expired"]},
+            "expiry": {"type": "string", "format": "date-time"},
+            "addedOn": {"type": "string", "format": "date-time"},
+            "imageUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "The URL of the medication image."
+            },
+            "scanDetails": {
+                "type": "object",
+                "properties": {
+                    "scannedOn": {"type": "string", "format": "date-time"},
+                    "batchNumber": {"type": "string"},
+                    "manufactureDate": {"type": "string"},
+                    "expiryDate": {"type": "string"},
+                    "source": {"type": "string"},
+                    "manufacturer": {"type": "string"}
+                }
+            }
+        },
+        "required": ["name", "status", "addedOn"]
+    }
+  },
+  "auth": {
+    "providers": [
+      "anonymous",
+      "google.com",
+      "password"
+    ]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/user"
+      },
+      "description": "Stores user profile information."
+    },
+    "/users/{userId}/scans/{scanId}": {
+      "schema": {
+        "$ref": "#/entities/Scan"
+      },
+      "description": "Stores records of medication scans for a specific user."
+    },
+     "/users/{userId}/meds/{medId}": {
+      "schema": {
+        "$ref": "#/entities/Medication"
+      },
+      "description": "Stores medications added by a user."
+    }
+  }
+}
+
+  
